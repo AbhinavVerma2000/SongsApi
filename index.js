@@ -11,6 +11,7 @@ const fs = require("fs");
 const expformidable = require("express-formidable");
 app.use(expformidable());
 // connect with MongoDB server
+
 app.listen(process.env.PORT || 5000, async ()=> {
   console.log("Server started");
   const client = await mongoClient.connect(process.env.MONGODB_URI, {
@@ -74,24 +75,24 @@ app.listen(process.env.PORT || 5000, async ()=> {
   });
 
 
-  app.get('/', (req, res) => {
-    res.send('Hello from Express on Vercel!');
-  });
-
-
-
-  // app.get("/", async function (request, result) {
-  //   // get all files from GridFS bucket
-  //   const files = await bucket.find({}).toArray();
-  //   const imgFiles = await imgBucket.find({}).toArray();
-  //   result.render("index", {
-  //     files,
-  //     imgFiles,
-  //   });
-  //   // result.send({
-  //   //   files,
-  //   // });
+  // app.get('/', (req, res) => {
+  //   res.send('Hello from Express on Vercel!');
   // });
+
+
+
+  app.get("/", async function (request, result) {
+    // get all files from GridFS bucket
+    const files = await bucket.find({}).toArray();
+    const imgFiles = await imgBucket.find({}).toArray();
+    result.render("index", {
+      files,
+      imgFiles,
+    });
+    // result.send({
+    //   files,
+    // });
+  });
 
   app.get("/songs", async function (request, result) {
     const files = await bucket
@@ -106,6 +107,7 @@ app.listen(process.env.PORT || 5000, async ()=> {
       files,
     });
   });
+
   app.get("/images", async function (request, result) {
     const files = await imgBucket
       .find({
@@ -206,3 +208,5 @@ app.listen(process.env.PORT || 5000, async ()=> {
     readstream.pipe(result);
   });
 });
+
+module.exports = serverless(app);
