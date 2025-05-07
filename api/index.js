@@ -14,7 +14,6 @@ app.use(expformidable());
 
 
 async function connectDB() {
-  if (db) return;
   const client = await mongodb.MongoClient.connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
