@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const mongodb = require("mongodb");
-const http = require("http").createServer(app);
+// const http = require("http").createServer(app);
 const mongoClient = mongodb.MongoClient;
 const ObjectId = mongodb.ObjectId;
 const cors = require("cors");
@@ -12,7 +12,7 @@ const expformidable = require("express-formidable");
 app.use(expformidable());
 
 // connect with MongoDB server
-http.listen(process.env.PORT || 5000, async function () {
+app.listen(process.env.PORT || 5000, async function () {
   console.log("Server started");
   const client = await mongoClient.connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
