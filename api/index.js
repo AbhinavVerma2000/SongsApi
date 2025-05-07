@@ -79,11 +79,6 @@ app.post("/upload", async function (request, result) {
 });
 
 
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'index.html'));
-});
-
-
 
 // app.get("/", async function (request, result) {
 //   await connectDB();
