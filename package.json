@@ -17,6 +17,7 @@
     "fs": "^0.0.1-security",
     "mongodb": "^6.9.0",
     "music-metadata": "^11.2.1",
-    "nodemon": "^3.1.7"
+    "nodemon": "^3.1.7",
+    "serverless-http": "^3.2.0"
   }
 }
