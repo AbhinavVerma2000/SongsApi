@@ -75,24 +75,24 @@ app.listen(process.env.PORT || 5000, async ()=> {
   });
 
 
-  // app.get('/', (req, res) => {
-  //   res.send('Hello from Express on Vercel!');
-  // });
-
-
-
-  app.get("/", async function (request, result) {
-    // get all files from GridFS bucket
-    const files = await bucket.find({}).toArray();
-    const imgFiles = await imgBucket.find({}).toArray();
-    result.render("index", {
-      files,
-      imgFiles,
-    });
-    // result.send({
-    //   files,
-    // });
+  app.get('/', (req, res) => {
+    res.send('Hello from Express on Vercel!');
   });
+
+
+
+  // app.get("/", async function (request, result) {
+  //   // get all files from GridFS bucket
+  //   const files = await bucket.find({}).toArray();
+  //   const imgFiles = await imgBucket.find({}).toArray();
+  //   result.render("index", {
+  //     files,
+  //     imgFiles,
+  //   });
+  //   // result.send({
+  //   //   files,
+  //   // });
+  // });
 
   app.get("/songs", async function (request, result) {
     const files = await bucket
