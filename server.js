@@ -11,9 +11,6 @@ app.set("view engine", "ejs");
 const expformidable = require("express-formidable");
 app.use(expformidable());
 
-
-
-
 // connect with MongoDB server
 http.listen(process.env.PORT || 5000, async function () {
   console.log("Server started");
