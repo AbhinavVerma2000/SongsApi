@@ -1,4 +1,5 @@
 const express = require("express");
+const { createServer } = require("@vercel/node");
 const app = express();
 const mongodb = require("mongodb");
 // const http = require("http").createServer(app);
@@ -13,18 +14,18 @@ app.use(expformidable());
 // connect with MongoDB server
 
 
-const client = await mongoClient.connect(process.env.MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
-const db = client.db("mongodb_gridfs");
-const imgdb = client.db("mongodb_gridfs_images");
-console.log("DB connected");
-// create GridFS bucket instance
-const bucket = new mongodb.GridFSBucket(db);
-const imgBucket = new mongodb.GridFSBucket(imgdb);
+async function connectDB() {
+  if (db) return;
+  const client = await mongodb.MongoClient.connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+  bucket = new mongodb.GridFSBucket(client.db("mongodb_gridfs"));
+  imgBucket = new mongodb.GridFSBucket(client.db("mongodb_gridfs_images"));
+}
 
 app.post("/upload", async function (request, result) {
+  await connectDB();
   // get input name="file" from client side
   const file = request.files.file;
 
