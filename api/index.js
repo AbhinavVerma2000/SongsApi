@@ -79,7 +79,7 @@ app.post("/upload", async function (request, result) {
 
 
 app.get('/', (req, res) => {
-  res.sendFile('/index.html');
+  res.sendFile(path.join(__dirname, '..', 'index.html'));
 });
 
 
