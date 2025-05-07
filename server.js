@@ -17,7 +17,10 @@ app.use(expformidable());
 // connect with MongoDB server
 http.listen(process.env.PORT || 5000, async function () {
   console.log("Server started");
-  const client = await mongoClient.connect("mongodb://localhost:27017");
+  const client = await mongoClient.connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
   const db = client.db("mongodb_gridfs");
   const imgdb = client.db("mongodb_gridfs_images");
   console.log("DB connected");
