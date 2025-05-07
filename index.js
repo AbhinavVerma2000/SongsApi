@@ -9,7 +9,6 @@ app.use(cors());
 const fs = require("fs");
 // app.set("view engine", "ejs");
 const expformidable = require("express-formidable");
-const serverless = require("serverless-http");
 app.use(expformidable());
 // connect with MongoDB server
 
@@ -209,5 +208,3 @@ app.listen(process.env.PORT || 5000, async ()=> {
     readstream.pipe(result);
   });
 });
-
-module.exports = serverless(app);
