@@ -208,3 +208,4 @@ app.listen(process.env.PORT || 5000, async ()=> {
     readstream.pipe(result);
   });
 });
+module.exports = app;
