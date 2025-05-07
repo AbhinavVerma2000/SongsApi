@@ -75,9 +75,7 @@ http.listen(process.env.PORT || 5000, async function () {
   });
 
 
-  app.render("index", function (request, result) {
-    result.sendFile(__dirname + "/index.ejs");
-  })
+  app.render("index")
 
 
 
