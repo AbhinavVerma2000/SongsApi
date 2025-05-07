@@ -5,13 +5,12 @@ const mongodb = require("mongodb");
 const mongoClient = mongodb.MongoClient;
 const ObjectId = mongodb.ObjectId;
 const cors = require("cors");
-const fileUpload = require("express-fileupload");
 app.use(cors());
 const fs = require("fs");
 app.set("view engine", "ejs");
 const expformidable = require("express-formidable");
 app.use(expformidable());
-app.use(fileUpload());
+app.use();
 // connect with MongoDB server
 
 
