@@ -33,7 +33,6 @@ app.post("/upload", async function (request, result) {
   
   const mm = await import('music-metadata');
   const metadata = await mm.parseFile(file.path);
-  console.log(metadata.common.picture[0]);
 
   if (metadata.common.picture && metadata.common.picture.length > 0) {
     const image = metadata.common.picture[0]; // typically image/jpeg or image/png
