@@ -75,16 +75,12 @@ http.listen(process.env.PORT || 5000, async function () {
   });
 
   app.get("/", async function (request, result) {
-    const files = await bucket
-      .find({
-        // filename: "name of file" //
-      })
-      .sort({
-        uploadDate: -1,
-      })
-      .toArray();
+    // get all files from GridFS bucket
+    const files = await bucket.find({}).toArray();
+    const imgFiles = await imgBucket.find({}).toArray();
     result.render("index", {
-      files: files,
+      files,
+      imgFiles,
     });
   });
 
