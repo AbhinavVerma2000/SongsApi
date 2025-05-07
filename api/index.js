@@ -79,11 +79,7 @@ app.post("/upload", async function (request, result) {
 
 
 app.get('/', (req, res) => {
-  return (<div><h1>Upload a Song</h1>
-    <form action="/upload" method="POST" enctype="multipart/form-data">
-      <input type="file" name="file" />
-      <button type="submit">Upload</button>
-    </form></div>)
+  res.sendFile(__dirname + 'index.html');
 });
 
 
