@@ -1,0 +1,10 @@
+<form action="/upload" method="POST" enctype="multipart/form-data">
+    <input type="file" name="file" accept="*" />
+    <input type="submit" value="Submit"/>
+</form>
+<% if(files) { %>
+    <% files.forEach(function (file) { %>
+      <a href="http://localhost:5000/songs/<%= file.filename %>"><%= file.filename %></a><br>
+      <!-- <img src="images/<%= file.filename %>" style="width: auto; height: auto;" /> -->
+    <% }) %>
+<% } %>
