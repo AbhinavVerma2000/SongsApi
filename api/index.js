@@ -24,7 +24,8 @@ async function connectDB() {
 }
 
 app.post("/upload", async function (request, result) {
-  await connectDB();
+  try {
+    await connectDB();
   // get input name="file" from client side
   const file = request.files.file;
 
@@ -70,6 +71,11 @@ app.post("/upload", async function (request, result) {
     .on("finish", function () {
       result.send({ msg: "File saved." });
     });
+  } catch (error) {
+    console.log(error);
+    result.status(500).send({ msg: "Error uploading file." });
+    
+  }
 });
 
 
