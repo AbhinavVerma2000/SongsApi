@@ -7,10 +7,9 @@ const ObjectId = mongodb.ObjectId;
 const cors = require("cors");
 app.use(cors());
 const fs = require("fs");
-app.set("view engine", "ejs");
+// app.set("view engine", "ejs");
 const expformidable = require("express-formidable");
 app.use(expformidable());
-
 // connect with MongoDB server
 app.listen(process.env.PORT || 5000, async ()=> {
   console.log("Server started");
