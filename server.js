@@ -75,7 +75,9 @@ http.listen(process.env.PORT || 5000, async function () {
   });
 
 
-  app.render("index")
+  app.get('/', (req, res) => {
+    res.send('Hello from Express on Vercel!');
+  });
 
 
 
