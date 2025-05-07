@@ -73,25 +73,26 @@ app.post("/upload", async function (request, result) {
 });
 
 
-// app.get('/', (req, res) => {
-//   res.send('Express on Vercel');
-// });
-
-
-
-app.get("/", async function (request, result) {
-  await connectDB();
-  // get all files from GridFS bucket
-  const files = await bucket.find({}).toArray();
-  const imgFiles = await imgBucket.find({}).toArray();
-  result.render("index", {
-    files,
-    imgFiles,
-  });
-  // result.send({
-  //   files,
-  // });
+app.get('/', (req, res) => {
+  res.send('Express on Vercel');
 });
+
+
+
+// app.get("/", async function (request, result) {
+//   await connectDB();
+//   // get all files from GridFS bucket
+//   const files = await bucket.find({}).toArray();
+//   const imgFiles = await imgBucket.find({}).toArray();
+//   result.render("index", {
+//     files,
+//     imgFiles,
+//   });
+//   result.sendFile(__dirname + "/index.html");
+//   // result.send({
+//   //   files,
+//   // });
+// });
 
 app.get("/songs", async function (request, result) {
   await connectDB();
