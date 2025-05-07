@@ -22,7 +22,7 @@ async function connectDB() {
   imgBucket = new mongodb.GridFSBucket(client.db("mongodb_gridfs_images"));
 }
 
-app.post("/api/upload", async function (request, result) {
+app.post("/upload", async function (request, result) {
   await connectDB();
   // get input name="file" from client side
   const file = request.files.file;
