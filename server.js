@@ -82,10 +82,6 @@ http.listen(process.env.PORT || 5000, async function () {
       files,
       imgFiles,
     });
-    // result.send({
-    //   files,
-    //   imgFiles,
-    // });
   });
 
   app.get("/songs", async function (request, result) {
