@@ -5,6 +5,7 @@ const mongodb = require("mongodb");
 const mongoClient = mongodb.MongoClient;
 const ObjectId = mongodb.ObjectId;
 const cors = require("cors");
+const path = require("path");
 app.use(cors());
 const fs = require("fs");
 app.set("view engine", "ejs");
@@ -79,7 +80,7 @@ app.post("/upload", async function (request, result) {
 
 
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '..'+'/index.html');
+  res.sendFile(path.join(__dirname, '..', 'index.html'));
 });
 
 
