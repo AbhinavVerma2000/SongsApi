@@ -89,10 +89,6 @@ app.post("/upload", async function (request, result) {
 //     files,
 //     imgFiles,
 //   });
-//   result.sendFile(__dirname + "/index.html");
-//   // result.send({
-//   //   files,
-//   // });
 // });
 
 app.get("/songs", async function (request, result) {
