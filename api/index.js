@@ -95,6 +95,7 @@ app.get('/', (req, res) => {
 // });
 
 app.get("/songs", async function (request, result) {
+  await connectDB();
   const files = await bucket
     .find({
       // filename: "name of file" //
@@ -109,6 +110,7 @@ app.get("/songs", async function (request, result) {
 });
 
 app.get("/images", async function (request, result) {
+  await connectDB();
   const files = await imgBucket
     .find({
       // filename: "name of file" //
@@ -123,6 +125,7 @@ app.get("/images", async function (request, result) {
 });
 
 app.get("/songs/:filename", async function (request, result) {
+  await connectDB();
   // get file name from URL
   const filename = request.params.filename;
 
@@ -169,6 +172,7 @@ app.get("/songs/:filename", async function (request, result) {
 });
 
 app.get("/images/:filename", async function (request, result) {
+  await connectDB();
   // get file name from URL
   const filename = request.params.filename;
 
