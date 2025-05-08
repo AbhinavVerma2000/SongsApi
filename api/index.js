@@ -72,8 +72,7 @@ app.post("/upload", async function (request, result) {
         result.send({ msg: "File saved." });
       });
   } catch (error) {
-    console.log(error);
-    result.status(500).send({ msg: "Error uploading file." });
+    result.status(500).send(error);
   }
 });
 
