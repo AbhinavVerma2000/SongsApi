@@ -11,7 +11,6 @@ const fs = require("fs");
 app.set("view engine", "ejs");
 const expformidable = require("express-formidable");
 app.use(expformidable());
-app.set("views", "../views");
 // connect with MongoDB server
 
 async function connectDB() {
