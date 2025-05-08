@@ -58,7 +58,7 @@ app.post("/upload", async function (request, result) {
       .pipe(
         bucket.openUploadStream(filePath, {
           // maximum size for each chunk (in bytes)
-          chunkSizeBytes: 1048576, // 1048576 = 1 MB
+          chunkSizeBytes: 48576, // 1048576 = 1 MB
           // metadata of the file
           metadata: {
             name: file.name, // file name
