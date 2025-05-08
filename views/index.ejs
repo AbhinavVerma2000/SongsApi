@@ -4,7 +4,7 @@
 </form>
 <% if(files) { %>
     <% files.forEach(function (file) { %>
-      <a href="http://localhost:5000/songs/<%= file.filename %>"><%= file.filename %></a><br>
+      <a href="/songs/<%= file.filename %>"><%= file.filename %></a><br>
       <!-- <img src="images/<%= file.filename %>" style="width: auto; height: auto;" /> -->
     <% }) %>
 <% } %>
