@@ -22,8 +22,9 @@ async function connectDB() {
   bucket = new mongodb.GridFSBucket(client.db("mongodb_gridfs"));
   imgBucket = new mongodb.GridFSBucket(client.db("mongodb_gridfs_images"));
 }
-
-connectDB()
+connectDB().then(() => {
+  console.log("Connected to MongoDB");
+});
 
 app.post("/upload", async function (request, result) {
   try {
