@@ -24,6 +24,16 @@ async function connectDB() {
   bucket = new mongodb.GridFSBucket(client.db("mongodb_gridfs"));
   imgBucket = new mongodb.GridFSBucket(client.db("mongodb_gridfs_images"));
 }
+connectDB().then(() => {
+  console.log("✅ Connected to MongoDB");
+
+  app.listen(process.env.PORT || 5000, () => {
+    console.log("🚀 Server started");
+  });
+}).catch((err) => {
+  console.error("❌ MongoDB connection failed:", err);
+  process.exit(1); // Exit process on failure
+});
 
 app.post("/upload", async function (request, result) {
   try {
@@ -194,16 +204,5 @@ app.get("/images/:filename", async function (request, result) {
   //   res.status(500).send("Error reading image");
   // });
   readstream.pipe(result);
-});
-
-connectDB().then(() => {
-  console.log("✅ Connected to MongoDB");
-
-  app.listen(process.env.PORT || 5000, () => {
-    console.log("🚀 Server started");
-  });
-}).catch((err) => {
-  console.error("❌ MongoDB connection failed:", err);
-  process.exit(1); // Exit process on failure
 });
 module.exports = app;
