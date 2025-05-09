@@ -44,7 +44,6 @@ app.post("/upload", async function (request, result) {
       const uploadImage = imgBucket.openUploadStream(filePath, {
         chunkSizeBytes: 1048576,
         metadata: {
-          type: "image",
           linkedSong: filePath,
           type: image.format,
         },
@@ -71,6 +70,9 @@ app.post("/upload", async function (request, result) {
       )
       // this callback will be called when the file is done saving
       .on("finish", function () {
+        fs.unlink(file.path, (err) => {
+          if (err) console.error("Temp file deletion failed:", err);
+        });
         result.send({ msg: "File saved." });
       });
   } catch (error) {
