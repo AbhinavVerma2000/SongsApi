@@ -11,17 +11,21 @@ const fs = require("fs");
 app.set("view engine", "ejs");
 const expformidable = require("express-formidable");
 app.use(expformidable());
-app.set('views', path.join(__dirname,'..', 'views'));
+app.set("views", path.join(__dirname, "..", "views"));
 // connect with MongoDB server
 let bucket;
 let imgBucket;
 async function connectDB() {
-  const client = await mongodb.MongoClient.connect(process.env.MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
-  bucket = new mongodb.GridFSBucket(client.db("mongodb_gridfs"));
-  imgBucket = new mongodb.GridFSBucket(client.db("mongodb_gridfs_images"));
+  try {
+    const client = await mongodb.MongoClient.connect(process.env.MONGODB_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    bucket = new mongodb.GridFSBucket(client.db("mongodb_gridfs"));
+    imgBucket = new mongodb.GridFSBucket(client.db("mongodb_gridfs_images"));
+  } catch (error) {
+    console.error("Error connecting to MongoDB:", error.message);
+  }
 }
 
 app.post("/upload", async function (request, result) {
@@ -74,7 +78,7 @@ app.post("/upload", async function (request, result) {
         result.send({ msg: "File saved." });
       });
   } catch (error) {
-    result.status(500).send({error: error.message, msg: "File not saved."});
+    result.status(500).send({ error: error.message, msg: "File not saved." });
   }
 });
 
