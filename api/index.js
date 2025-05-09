@@ -14,6 +14,8 @@ app.use(expformidable());
 app.set('views', path.join(__dirname,'..', 'views'));
 // connect with MongoDB server
 
+let bucket;
+let imgBucket;
 async function connectDB() {
   const client = await mongodb.MongoClient.connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
