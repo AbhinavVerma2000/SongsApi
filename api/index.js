@@ -69,7 +69,7 @@ app.post("/upload", async function (request, result) {
       )
       // this callback will be called when the file is done saving
       .on("finish", function () {
-        result.send({ msg: "File saved." });
+        result.send({ msg: "File saved.", mimeType: file.type });
       });
   } catch (error) {
     result.status(500).send({error: error.message, msg: "File not saved."});
