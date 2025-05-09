@@ -11,25 +11,21 @@ const fs = require("fs");
 app.set("view engine", "ejs");
 const expformidable = require("express-formidable");
 app.use(expformidable());
-app.set("views", path.join(__dirname, "..", "views"));
+app.set('views', path.join(__dirname,'..', 'views'));
 // connect with MongoDB server
-let bucket;
-let imgBucket;
+
 async function connectDB() {
-  try {
-    const client = await mongodb.MongoClient.connect(process.env.MONGODB_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-    bucket = new mongodb.GridFSBucket(client.db("mongodb_gridfs"));
-    imgBucket = new mongodb.GridFSBucket(client.db("mongodb_gridfs_images"));
-  } catch (error) {
-    console.error("Error connecting to MongoDB:", error.message);
-  }
+  const client = await mongodb.MongoClient.connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  });
+  bucket = new mongodb.GridFSBucket(client.db("mongodb_gridfs"));
+  imgBucket = new mongodb.GridFSBucket(client.db("mongodb_gridfs_images"));
 }
 
 app.post("/upload", async function (request, result) {
   try {
+    await connectDB();
     // get input name="file" from client side
     const file = request.files.file;
 
@@ -78,11 +74,12 @@ app.post("/upload", async function (request, result) {
         result.send({ msg: "File saved." });
       });
   } catch (error) {
-    result.status(500).send({ error: error.message, msg: "File not saved." });
+    result.status(500).send({error: error.message, msg: "File not saved."});
   }
 });
 
 app.get("/", async function (request, result) {
+  await connectDB();
   // get all files from GridFS bucket
   const files = await bucket.find({}).toArray();
   const imgFiles = await imgBucket.find({}).toArray();
@@ -94,6 +91,7 @@ app.get("/", async function (request, result) {
 });
 
 app.get("/songs", async function (request, result) {
+  await connectDB();
   const files = await bucket
     .find({
       // filename: "name of file" //
@@ -108,6 +106,7 @@ app.get("/songs", async function (request, result) {
 });
 
 app.get("/images", async function (request, result) {
+  await connectDB();
   const files = await imgBucket
     .find({
       // filename: "name of file" //
@@ -122,6 +121,7 @@ app.get("/images", async function (request, result) {
 });
 
 app.get("/songs/:filename", async function (request, result) {
+  await connectDB();
   // get file name from URL
   const filename = request.params.filename;
 
@@ -161,6 +161,7 @@ app.get("/songs/:filename", async function (request, result) {
 });
 
 app.get("/images/:filename", async function (request, result) {
+  await connectDB();
   // get file name from URL
   const filename = request.params.filename;
 
@@ -201,7 +202,5 @@ app.get("/images/:filename", async function (request, result) {
 
 app.listen(process.env.PORT || 5000, async () => {
   console.log("Server started");
-  await connectDB();
-  console.log("Connected to MongoDB");
 });
 module.exports = app;
