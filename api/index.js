@@ -23,9 +23,10 @@ async function connectDB() {
   imgBucket = new mongodb.GridFSBucket(client.db("mongodb_gridfs_images"));
 }
 
+connectDB()
+
 app.post("/upload", async function (request, result) {
   try {
-    await connectDB();
     // get input name="file" from client side
     const file = request.files.file;
 
@@ -77,7 +78,6 @@ app.post("/upload", async function (request, result) {
 });
 
 app.get("/", async function (request, result) {
-  await connectDB();
   // get all files from GridFS bucket
   const files = await bucket.find({}).toArray();
   const imgFiles = await imgBucket.find({}).toArray();
@@ -89,7 +89,6 @@ app.get("/", async function (request, result) {
 });
 
 app.get("/songs", async function (request, result) {
-  await connectDB();
   const files = await bucket
     .find({
       // filename: "name of file" //
@@ -104,7 +103,6 @@ app.get("/songs", async function (request, result) {
 });
 
 app.get("/images", async function (request, result) {
-  await connectDB();
   const files = await imgBucket
     .find({
       // filename: "name of file" //
@@ -119,7 +117,6 @@ app.get("/images", async function (request, result) {
 });
 
 app.get("/songs/:filename", async function (request, result) {
-  await connectDB();
   // get file name from URL
   const filename = request.params.filename;
 
@@ -137,12 +134,6 @@ app.get("/songs/:filename", async function (request, result) {
     });
   }
   result.set("Content-Type", song.metadata.type);
-  // return error if file not found
-  if (!files || files.length == 0) {
-    return result.status(404).json({
-      error: "File does not exists.",
-    });
-  }
 
   // it will fetch the file from bucket and add it to pipe
   // result response is added in the pipe so it will keep
@@ -165,7 +156,6 @@ app.get("/songs/:filename", async function (request, result) {
 });
 
 app.get("/images/:filename", async function (request, result) {
-  await connectDB();
   // get file name from URL
   const filename = request.params.filename;
 
