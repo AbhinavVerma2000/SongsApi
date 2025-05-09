@@ -14,7 +14,7 @@ app.use(expformidable());
 app.set('views', path.join(__dirname,'..', 'views'));
 // connect with MongoDB server
 
-async function connectDB() {
+const connectDB=async() => {
   const client = await mongodb.MongoClient.connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
