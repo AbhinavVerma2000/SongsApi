@@ -11,7 +11,7 @@ const fs = require("fs");
 app.set("view engine", "ejs");
 const expformidable = require("express-formidable");
 app.use(expformidable());
-app.set('views', path.join(__dirname,'..', 'views'));
+app.set("views", path.join(__dirname, "..", "views"));
 // connect with MongoDB server
 
 async function connectDB() {
@@ -33,22 +33,24 @@ app.post("/upload", async function (request, result) {
     // this will be saved as "filename" in "fs.files" collection
     const filePath = file.name;
 
-    // const mm = await import("music-metadata");
-    // const metadata = await mm.parseFile(file.path);
+    if (file.type.startsWith("audio/")) {
+      const mm = await import("music-metadata");
+      const metadata = await mm.parseFile(file.path);
 
-    // if (metadata.common.picture && metadata.common.picture.length > 0) {
-    //   const image = metadata.common.picture[0]; // typically image/jpeg or image/png
+      if (metadata.common.picture && metadata.common.picture.length > 0) {
+        const image = metadata.common.picture[0]; // typically image/jpeg or image/png
 
-    //   const uploadImage = imgBucket.openUploadStream(filePath, {
-    //     chunkSizeBytes: 1048576,
-    //     metadata: {
-    //       linkedSong: filePath,
-    //       type: image.format,
-    //     },
-    //   });
+        const uploadImage = imgBucket.openUploadStream(filePath, {
+          chunkSizeBytes: 1048576,
+          metadata: {
+            linkedSong: filePath,
+            type: image.format,
+          },
+        });
 
-    //   uploadImage.end(image.data);
-    // }
+        uploadImage.end(image.data);
+      }
+    }
 
     // read user uploaded file stream
     fs.createReadStream(file.path)
@@ -74,7 +76,7 @@ app.post("/upload", async function (request, result) {
         result.send({ msg: "File saved." });
       });
   } catch (error) {
-    result.status(500).send({error: error.message, msg: "File not saved."});
+    result.status(500).send({ error: error.message, msg: "File not saved." });
   }
 });
 
