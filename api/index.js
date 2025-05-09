@@ -33,22 +33,22 @@ app.post("/upload", async function (request, result) {
     // this will be saved as "filename" in "fs.files" collection
     const filePath = file.name;
 
-    const mm = await import("music-metadata");
-    const metadata = await mm.parseFile(file.path);
+    // const mm = await import("music-metadata");
+    // const metadata = await mm.parseFile(file.path);
 
-    if (metadata.common.picture && metadata.common.picture.length > 0) {
-      const image = metadata.common.picture[0]; // typically image/jpeg or image/png
+    // if (metadata.common.picture && metadata.common.picture.length > 0) {
+    //   const image = metadata.common.picture[0]; // typically image/jpeg or image/png
 
-      const uploadImage = imgBucket.openUploadStream(filePath, {
-        chunkSizeBytes: 1048576,
-        metadata: {
-          linkedSong: filePath,
-          type: image.format,
-        },
-      });
+    //   const uploadImage = imgBucket.openUploadStream(filePath, {
+    //     chunkSizeBytes: 1048576,
+    //     metadata: {
+    //       linkedSong: filePath,
+    //       type: image.format,
+    //     },
+    //   });
 
-      uploadImage.end(image.data);
-    }
+    //   uploadImage.end(image.data);
+    // }
 
     // read user uploaded file stream
     fs.createReadStream(file.path)
