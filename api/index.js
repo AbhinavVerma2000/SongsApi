@@ -46,7 +46,7 @@ app.post("/upload", async function (request, result) {
           metadata: {
             linkedSong: filePath,
             type: image.format,
-            duration: metadata.common.duration,
+            duration: metadata.format.duration,
             title: metadata.common.title,
             artist: metadata.common.artist,
             album: metadata.common.album,
