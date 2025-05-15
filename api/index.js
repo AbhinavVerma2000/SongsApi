@@ -22,6 +22,7 @@ async function connectDB() {
   });
   bucket = new mongodb.GridFSBucket(client.db("mongodb_gridfs"));
   imgBucket = new mongodb.GridFSBucket(client.db("mongodb_gridfs_images"));
+  collection = bucket.collection("api");
 }
 
 app.post("/upload", async function (request, result) {
@@ -55,7 +56,7 @@ app.post("/upload", async function (request, result) {
 
         uploadImage.end(image.data);
       }
-      const collection = bucket.collection("api");
+      
       const re = await collection.insertOne({
         title: metadata.common.title,
         artistName: metadata.common.artist,
@@ -103,6 +104,15 @@ app.get("/", async function (request, result) {
   result.render("index", {
     files,
     imgFiles,
+  });
+  // result.send("Okay");
+});
+app.get("/songsapi", async function (request, result) {
+  await connectDB();
+  // get all files from GridFS bucket
+  const files = await collection.find({}).toArray();
+  result.send( {
+    files
   });
   // result.send("Okay");
 });
