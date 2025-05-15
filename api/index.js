@@ -10,6 +10,7 @@ app.use(cors());
 const fs = require("fs");
 app.set("view engine", "ejs");
 const expformidable = require("express-formidable");
+const { title } = require("process");
 app.use(expformidable());
 app.set("views", path.join(__dirname, "..", "views"));
 // connect with MongoDB server
@@ -45,7 +46,10 @@ app.post("/upload", async function (request, result) {
           metadata: {
             linkedSong: filePath,
             type: image.format,
-            metadata: metadata
+            duration: metadata.common.duration,
+            title: metadata.common.title,
+            artist: metadata.common.artist,
+            album: metadata.common.album,
           },
         });
 
@@ -74,7 +78,7 @@ app.post("/upload", async function (request, result) {
         fs.unlink(file.path, (err) => {
           if (err) console.error("Temp file deletion failed:", err);
         });
-        result.send({ msg: "File saved.", file:file });
+        result.send({ msg: "File saved." });
       });
   } catch (error) {
     result.status(500).send({ error: error.message, msg: "File not saved." });
