@@ -35,6 +35,9 @@ app.post("/upload", async function (request, result) {
     // set file path in MongoDB GriDFS
     // this will be saved as "filename" in "fs.files" collection
     const filePath = file.name;
+    const imgname = filePath.replace(/\.[^/.]+$/, "") + ".jpg"; // change extension to .jpg
+
+
 
     if (file.type.startsWith("audio/")) {
       const mm = await import("music-metadata");
@@ -42,8 +45,8 @@ app.post("/upload", async function (request, result) {
 
       if (metadata.common.picture && metadata.common.picture.length > 0) {
         const image = metadata.common.picture[0]; // typically image/jpeg or image/png
-
-        const uploadImage = imgBucket.openUploadStream(filePath, {
+        
+        const uploadImage = imgBucket.openUploadStream(imgname, {
           chunkSizeBytes: 1048576,
           metadata: {
             linkedSong: filePath,
@@ -65,7 +68,7 @@ app.post("/upload", async function (request, result) {
         duration: (metadata.format.duration / 60).toFixed(2).replace(".", ":"),
         genre: metadata.common.genre,
         musicUrl: `https://songsapi-w20w.onrender.com/songs/${filePath}`,
-        thumbnail: `https://songsapi-w20w.onrender.com/images/${filePath}`,
+        thumbnail: `https://songsapi-w20w.onrender.com/images/${imgname}`,
       });
     }
 
