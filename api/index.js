@@ -22,7 +22,8 @@ async function connectDB() {
   });
   bucket = new mongodb.GridFSBucket(client.db("mongodb_gridfs"));
   imgBucket = new mongodb.GridFSBucket(client.db("mongodb_gridfs_images"));
-  collection = bucket.collection("api");
+  db = client.db("mongodb_gridfs")
+  collection = db.collection("api");
 }
 
 app.post("/upload", async function (request, result) {
