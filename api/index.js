@@ -73,7 +73,7 @@ app.post("/upload", async function (request, result) {
         fs.unlink(file.path, (err) => {
           if (err) console.error("Temp file deletion failed:", err);
         });
-        result.send({ msg: "File saved." });
+        result.send({ msg: "File saved.", file:file });
       });
   } catch (error) {
     result.status(500).send({ error: error.message, msg: "File not saved." });
