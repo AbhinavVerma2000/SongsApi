@@ -45,6 +45,7 @@ app.post("/upload", async function (request, result) {
           metadata: {
             linkedSong: filePath,
             type: image.format,
+            metadata: metadata
           },
         });
 
@@ -66,7 +67,6 @@ app.post("/upload", async function (request, result) {
             size: file.size, // file size (in bytes)
             type: file.type, // type of file
           },
-          file: file
         })
       )
       // this callback will be called when the file is done saving
