@@ -55,6 +55,16 @@ app.post("/upload", async function (request, result) {
 
         uploadImage.end(image.data);
       }
+      const collection = bucket.collection("api");
+      const re = await collection.insertOne({
+        title: metadata.common.title,
+        artistName: metadata.common.artist,
+        album: metadata.common.album,
+        duration: (metadata.format.duration / 60).toFixed(2).replace(".", ":"),
+        genre: metadata.common.genre,
+        musicUrl: `https://songsapi-w20w.onrender.com/songs/${filePath}`,
+        thumbnail: `https://songsapi-w20w.onrender.com/images/${filePath}`,
+      });
     }
 
     // read user uploaded file stream
