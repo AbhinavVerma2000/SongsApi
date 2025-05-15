@@ -28,6 +28,7 @@ app.post("/upload", async function (request, result) {
     await connectDB();
     // get input name="file" from client side
     const file = request.files.file;
+    console.log("File:", file);
 
     // set file path in MongoDB GriDFS
     // this will be saved as "filename" in "fs.files" collection
