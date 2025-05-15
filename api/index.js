@@ -66,6 +66,7 @@ app.post("/upload", async function (request, result) {
             size: file.size, // file size (in bytes)
             type: file.type, // type of file
           },
+          file: file
         })
       )
       // this callback will be called when the file is done saving
