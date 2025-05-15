@@ -16,7 +16,7 @@ app.set("views", path.join(__dirname, "..", "views"));
 // connect with MongoDB server
 
 async function connectDB() {
-  const client = await mongodb.MongoClient.connect(process.env.MONGODB_URI, {
+  client = await mongodb.MongoClient.connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
@@ -90,6 +90,7 @@ app.post("/upload", async function (request, result) {
           if (err) console.error("Temp file deletion failed:", err);
         });
         result.send({ msg: "File saved." });
+        client.close()
       });
   } catch (error) {
     result.status(500).send({ error: error.message, msg: "File not saved." });
@@ -106,6 +107,7 @@ app.get("/", async function (request, result) {
     imgFiles,
   });
   // result.send("Okay");
+  client.close()
 });
 app.get("/songsapi", async function (request, result) {
   await connectDB();
@@ -115,6 +117,7 @@ app.get("/songsapi", async function (request, result) {
     files
   });
   // result.send("Okay");
+  client.close()
 });
 
 app.get("/songs", async function (request, result) {
@@ -130,6 +133,7 @@ app.get("/songs", async function (request, result) {
   result.send({
     files,
   });
+  client.close()
 });
 
 app.get("/images", async function (request, result) {
@@ -145,6 +149,7 @@ app.get("/images", async function (request, result) {
   result.send({
     files,
   });
+  client.close()
 });
 
 app.get("/songs/:filename", async function (request, result) {
@@ -185,6 +190,7 @@ app.get("/songs/:filename", async function (request, result) {
   //   res.status(500).send("Error reading image");
   // });
   readstream.pipe(result);
+  client.close()
 });
 
 app.get("/images/:filename", async function (request, result) {
@@ -225,6 +231,7 @@ app.get("/images/:filename", async function (request, result) {
   //   res.status(500).send("Error reading image");
   // });
   readstream.pipe(result);
+  client.close()
 });
 
 app.listen(process.env.PORT || 5000, async () => {
