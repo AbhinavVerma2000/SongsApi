@@ -116,7 +116,7 @@ app.get("/songsapi", async function (request, result) {
   await connectDB();
   // get all files from GridFS bucket
   const files = await collection.find({}).toArray();
-  result.setHeader('Access-Control-Allow-Origin', '*');
+  // result.setHeader('Access-Control-Allow-Origin', '*');
   result.send( {
     files
   });
@@ -133,7 +133,7 @@ app.get("/songs", async function (request, result) {
       uploadDate: -1,
     })
     .toArray();
-    result.setHeader('Access-Control-Allow-Origin', '*');
+    // result.setHeader('Access-Control-Allow-Origin', '*');
   result.send({
     files,
   });
@@ -149,7 +149,7 @@ app.get("/images", async function (request, result) {
       uploadDate: -1,
     })
     .toArray();
-    result.setHeader('Access-Control-Allow-Origin', '*');
+    // result.setHeader('Access-Control-Allow-Origin', '*');
   result.send({
     files,
   });
@@ -174,7 +174,7 @@ app.get("/songs/:filename", async function (request, result) {
       error: "File does not exists.",
     });
   }
-  res.setHeader('Access-Control-Allow-Origin', '*');
+  // res.setHeader('Access-Control-Allow-Origin', '*');
   result.set("Content-Type", song.metadata.type);
 
 
@@ -216,7 +216,7 @@ app.get("/images/:filename", async function (request, result) {
       error: "File does not exists.",
     });
   }
-  res.setHeader('Access-Control-Allow-Origin', '*');
+  // res.setHeader('Access-Control-Allow-Origin', '*');
   result.set("Content-Type", image.metadata.type);
 
   // it will fetch the file from bucket and add it to pipe
