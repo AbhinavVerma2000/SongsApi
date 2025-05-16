@@ -142,9 +142,7 @@ app.get("/songs", async function (request, result) {
 app.get("/images", async function (request, result) {
   await connectDB();
   const files = await imgBucket
-    .find({
-      // filename: "name of file" //
-    })
+    .find({})
     .sort({
       uploadDate: -1,
     })
