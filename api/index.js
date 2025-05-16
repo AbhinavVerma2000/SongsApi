@@ -116,6 +116,7 @@ app.get("/songsapi", async function (request, result) {
   await connectDB();
   // get all files from GridFS bucket
   const files = await collection.find({}).toArray();
+  result.setHeader('Access-Control-Allow-Origin', '*');
   result.send( {
     files
   });
@@ -132,6 +133,7 @@ app.get("/songs", async function (request, result) {
       uploadDate: -1,
     })
     .toArray();
+    result.setHeader('Access-Control-Allow-Origin', '*');
   result.send({
     files,
   });
@@ -147,6 +149,7 @@ app.get("/images", async function (request, result) {
       uploadDate: -1,
     })
     .toArray();
+    result.setHeader('Access-Control-Allow-Origin', '*');
   result.send({
     files,
   });
@@ -166,11 +169,14 @@ app.get("/songs/:filename", async function (request, result) {
 
   const song = files[0];
   if (!files || files.length == 0) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
     return result.status(404).json({
       error: "File does not exists.",
     });
   }
+  res.setHeader('Access-Control-Allow-Origin', '*');
   result.set("Content-Type", song.metadata.type);
+
 
   // it will fetch the file from bucket and add it to pipe
   // result response is added in the pipe so it will keep
@@ -210,6 +216,7 @@ app.get("/images/:filename", async function (request, result) {
       error: "File does not exists.",
     });
   }
+  res.setHeader('Access-Control-Allow-Origin', '*');
   result.set("Content-Type", image.metadata.type);
 
   // it will fetch the file from bucket and add it to pipe
